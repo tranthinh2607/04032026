@@ -53,6 +53,12 @@ class RandomGeneratorApp {
         this.btnSpin = document.getElementById('btnSpin');
         this.historyList = document.getElementById('historyList');
 
+        // Login DOM
+        this.loginContainer = document.getElementById('loginContainer');
+        this.loginForm = document.getElementById('loginForm');
+        this.usernameInput = document.getElementById('usernameInput');
+        this.passwordInput = document.getElementById('passwordInput');
+
         // Tabs
         this.tabBtns = document.querySelectorAll('.tab-btn');
         this.modeSections = document.querySelectorAll('.mode-section');
@@ -63,6 +69,30 @@ class RandomGeneratorApp {
     }
 
     bindEvents() {
+        // Đăng nhập đơn giản: chỉ cần nhập đủ username + password
+        if (this.loginForm) {
+            this.loginForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                const username = (this.usernameInput?.value || '').trim();
+                const password = (this.passwordInput?.value || '').trim();
+
+                if (!username || !password) {
+                    alert('Vui lòng nhập đầy đủ tên đăng nhập và mật khẩu');
+                    return;
+                }
+
+                // Đăng nhập thành công
+                alert('Đăng nhập thành công');
+
+                if (this.loginContainer) {
+                    this.loginContainer.classList.add('hidden');
+                }
+                if (this.appContainer) {
+                    this.appContainer.classList.remove('hidden');
+                }
+            });
+        }
+
         // Tab switching
         this.tabBtns.forEach(btn => {
             btn.addEventListener('click', (e) => {
