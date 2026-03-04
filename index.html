@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vòng Quay May Mắn Cao Cấp</title>
+    <!-- Import Google Fonts -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800&family=Oswald:wght@500;700&display=swap"
+        rel="stylesheet">
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <div class="app-container" id="appContainer">
+        <!-- LEFT: Control Panel -->
+        <aside class="glass-panel control-panel">
+            <h2 class="panel-header"><i class="fa-solid fa-sliders"></i> Cài đặt</h2>
+
+            <div class="tabs">
+                <button class="tab-btn active" data-target="numberMode">Quay Số</button>
+                <button class="tab-btn" data-target="nameMode">Bốc Thăm</button>
+            </div>
+
+            <div id="numberMode" class="mode-section">
+                <div class="row-group">
+                    <div class="input-group">
+                        <label>Từ (Min)</label>
+                        <div class="custom-stepper-wrapper">
+                            <input type="number" id="numMin" value="1">
+                            <div class="stepper-controls">
+                                <button type="button" class="btn-step up" data-target="numMin"><i
+                                        class="fa-solid fa-caret-up"></i></button>
+                                <button type="button" class="btn-step down" data-target="numMin"><i
+                                        class="fa-solid fa-caret-down"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="input-group">
+                        <label>Đến (Max)</label>
+                        <div class="custom-stepper-wrapper">
+                            <input type="number" id="numMax" value="100">
+                            <div class="stepper-controls">
+                                <button type="button" class="btn-step up" data-target="numMax"><i
+                                        class="fa-solid fa-caret-up"></i></button>
+                                <button type="button" class="btn-step down" data-target="numMax"><i
+                                        class="fa-solid fa-caret-down"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="checkbox-group">
+                    <label class="checkbox-label"><input type="checkbox" id="filterOdd"> Chỉ số lẻ</label>
+                    <label class="checkbox-label"><input type="checkbox" id="filterEven"> Chỉ số chẵn</label>
+                </div>
+            </div>
+
+            <div id="nameMode" class="mode-section hidden">
+                <div class="input-group">
+                    <label>Danh sách chữ (mỗi ô 1 dòng)</label>
+                    <textarea id="nameList" placeholder="Ví dụ:&#10;Nguyễn Văn A&#10;Trần Thị B"></textarea>
+                    <small style="color:var(--text-muted); font-size:0.75rem; text-align:right" id="nameCount">0
+                        mục</small>
+                </div>
+
+                <!-- Prize Management Section -->
+                <div class="prize-management">
+                    <label
+                        style="font-size:0.9rem; font-weight:600; color:var(--text-muted); margin-bottom:10px; display:block;">Cơ
+                        cấu giải thưởng</label>
+                    <div class="prize-list" id="prizeList">
+                        <!-- Items injected by JS -->
+                    </div>
+                    <button class="btn-add-prize" id="btnAddPrize"><i class="fa-solid fa-plus"></i> Thêm hạng
+                        giải</button>
+                </div>
+            </div>
+
+            <div class="row-group" style="margin-top:10px;">
+                <div class="input-group">
+                    <label>Thời gian (giây)</label>
+                    <div class="custom-stepper-wrapper">
+                        <input type="number" id="spinDuration" value="5" min="1" max="15">
+                        <div class="stepper-controls">
+                            <button type="button" class="btn-step up" data-target="spinDuration"><i
+                                    class="fa-solid fa-caret-up"></i></button>
+                            <button type="button" class="btn-step down" data-target="spinDuration"><i
+                                    class="fa-solid fa-caret-down"></i></button>
+                        </div>
+                    </div>
+                </div>
+                <div class="input-group">
+                    <label>Số giải/lần</label>
+                    <div class="custom-stepper-wrapper">
+                        <input type="number" id="drawCount" value="1" min="1" max="10">
+                        <div class="stepper-controls">
+                            <button type="button" class="btn-step up" data-target="drawCount"><i
+                                    class="fa-solid fa-caret-up"></i></button>
+                            <button type="button" class="btn-step down" data-target="drawCount"><i
+                                    class="fa-solid fa-caret-down"></i></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="input-group">
+                <label>Loại trừ (cách nhau bởi dấu phẩy)</label>
+                <input type="text" id="blacklist" placeholder="Ví dụ: 13, 42, Hùng">
+            </div>
+
+            <label class="toggle-container">
+                <span style="font-weight:600; font-size:0.9rem;">Không lặp lại kết quả</span>
+                <input type="checkbox" id="uniqueToggle" checked>
+                <div class="toggle-switch"></div>
+            </label>
+        </aside>
+
+        <!-- CENTER: Main Board -->
+        <main class="main-board">
+            <div class="prize-selector-wrapper" id="prizeSelectorWrapper">
+                <label>Giải đang quay:</label>
+                <select id="prizeSelect" class="prize-select">
+                    <!-- Options injected by JS -->
+                </select>
+            </div>
+
+            <div class="top-controls">
+                <button class="icon-btn" id="btnSound" title="Bật/tắt âm thanh">
+                    <i class="fa-solid fa-volume-high"></i>
+                </button>
+                <button class="icon-btn" id="btnFullscreen" title="Toàn màn hình">
+                    <i class="fa-solid fa-expand"></i>
+                </button>
+            </div>
+
+            <div class="result-display" id="resultDisplay">
+                <div class="prize-neon-heading" id="prizeHeading"></div>
+                <div class="result-item" id="mainResult">000</div>
+            </div>
+
+            <button class="btn-spin" id="btnSpin">QUAY NGAY <i class="fa-solid fa-rotate-right"></i></button>
+        </main>
+
+        <!-- RIGHT: History -->
+        <aside class="glass-panel history-sidebar">
+            <h2 class="panel-header"><i class="fa-solid fa-clock-rotate-left"></i> Lịch sử</h2>
+
+            <div class="history-list" id="historyList">
+                <!-- Items injected by JS -->
+            </div>
+
+            <div class="history-actions">
+                <button class="btn-outline danger" id="btnClearHistory"><i class="fa-solid fa-trash"></i> Xóa lịch
+                    sử</button>
+                <button class="btn-outline" id="btnExportCSV"><i class="fa-solid fa-file-csv"></i> Xuất File
+                    CSV</button>
+            </div>
+        </aside>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
