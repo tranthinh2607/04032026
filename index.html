@@ -16,14 +16,21 @@
 </head>
 
 <body>
-    <div>
-        <label for="txtboxusername">Tên đăng nhập</label>
-        <input type="text" id="input" name="txtboxusername" placeholder="Nhập UserName">
-        <label for="textboxpassword">Mật khẩu</label>
-        <input type="password" id="input" name="textboxpassword" placeholder="Nhập Password">
-        <button type="submit">Đăng nhập</button>
+    <!-- KHU VỰC ĐĂNG NHẬP -->
+    <div id="loginContainer">
+        <form id="loginForm">
+            <label for="usernameInput">Tên đăng nhập</label>
+            <input type="text" id="usernameInput" name="txtboxusername" placeholder="Nhập UserName">
+
+            <label for="passwordInput">Mật khẩu</label>
+            <input type="password" id="passwordInput" name="textboxpassword" placeholder="Nhập Password">
+
+            <button type="submit">Đăng nhập</button>
+        </form>
     </div>
-    <div class="app-container" id="appContainer">
+
+    <!-- ỨNG DỤNG CHÍNH (ẨN CHO ĐẾN KHI ĐĂNG NHẬP THÀNH CÔNG) -->
+    <div class="app-container hidden" id="appContainer">
         <!-- LEFT: Control Panel -->
         <aside class="glass-panel control-panel">
             <h2 class="panel-header"><i class="fa-solid fa-sliders"></i> Cài đặt</h2>
